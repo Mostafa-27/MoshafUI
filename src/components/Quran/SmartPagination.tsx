@@ -47,33 +47,37 @@ export default function SmartPagination({
 
   const open = Boolean(anchorEl);
 
+  // Calculate the current spread (two pages)
+  const leftPage = currentPage;
+  const rightPage = currentPage + 1;
+
   return (
-    <Box className="flex items-center justify-center gap-3 mt-6 mb-4">
+    <Box className="flex flex-row-reverse items-center justify-center gap-3 mt-6 mb-4">
       <IconButton
         onClick={() => onPageChange(1)}
         disabled={currentPage <= 1}
         className="hover:bg-gray-100"
         size="small"
       >
-        <FirstPage />
+        <LastPage />
       </IconButton>
 
       <IconButton
-        onClick={() => onPageChange(currentPage - 1)}
+        onClick={() => onPageChange(currentPage - 2)}
         disabled={currentPage <= 1}
         className="hover:bg-gray-100"
       >
-        <ChevronLeft />
+        <ChevronRight />
       </IconButton>
 
       <Button
         variant="outlined"
         size="small"
         onClick={handleJumpClick}
-        className="min-w-[120px]"
+        className="min-w-[160px]"
       >
         <Typography className="text-gray-700">
-          {currentPage} / {totalPages}
+          {leftPage}-{rightPage} / {totalPages}
         </Typography>
       </Button>
 
@@ -118,20 +122,21 @@ export default function SmartPagination({
       </Popover>
 
       <IconButton
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage >= totalPages}
+        onClick={() => onPageChange(currentPage + 2)}
+        disabled={rightPage >= totalPages}
         className="hover:bg-gray-100"
       >
-        <ChevronRight />
+        <ChevronLeft />
       </IconButton>
 
       <IconButton
-        onClick={() => onPageChange(totalPages)}
-        disabled={currentPage >= totalPages}
+        onClick={() => onPageChange(totalPages - 1)}
+        disabled={rightPage >= totalPages}
         className="hover:bg-gray-100"
         size="small"
       >
-        <LastPage />
+        {/* <LastPage /> */}
+        <FirstPage />
       </IconButton>
     </Box>
   );

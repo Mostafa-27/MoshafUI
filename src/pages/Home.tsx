@@ -3,11 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { quranApi } from "../services/api";
 import MushafPage from "../components/Quran/MushafPage";
-import MushafPagination from "../components/Quran/MushafPagination";
+import SmartPagination from "../components/Quran/SmartPagination";
 
 export default function Home() {
   const [currentPage1, setCurrentPage1] = useState(1);
-  const [currentPage2, setCurrentPage2] = useState(1);
+  const [currentPage2, setCurrentPage2] = useState(2);
 
   const {
     data: pageData1,
@@ -26,15 +26,11 @@ export default function Home() {
     queryFn: () => quranApi.getPage(currentPage2),
   });
 
+  console.log(pageData1, "page1", pageData2, "page2");
+
   const handlePageChange = (newPage: number) => {
-    console.log(newPage + 1);
-    if (newPage > 0) {
-      setCurrentPage1(Math.abs(newPage) + 2);
-      setCurrentPage2(Math.abs(newPage) + 3);
-    } else {
-      setCurrentPage1(Math.abs(newPage) - 2);
-      setCurrentPage2(Math.abs(newPage) - 3 || 1);
-    }
+    setCurrentPage1(newPage);
+    setCurrentPage2(newPage + 1);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -57,12 +53,12 @@ export default function Home() {
   return (
     <Container maxWidth="xl" className="py-8">
       <Box className="grid grid-cols-2 gap-4">
-        {currentPage2 > 1 && <MushafPage pageData={pageData2} isRightPage />}
+        {<MushafPage pageData={pageData2} />}
         <MushafPage pageData={pageData1} />
       </Box>
-      <MushafPagination
+      <SmartPagination
         currentPage={currentPage1}
-        totalPages={604} // Total number of pages in the Quran
+        totalPages={604}
         onPageChange={handlePageChange}
       />
     </Container>

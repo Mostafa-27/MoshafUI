@@ -45,9 +45,9 @@ function App() {
           <Layout>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/surah/:id" element={<Surah />} />
+              {/* <Route path="/surah/:id" element={<Surah />} /> */}
               <Route path="/search" element={<Search />} />
-              <Route path="/range" element={<Range />} />
+              {/* <Route path="/range" element={<Range />} /> */}
             </Routes>
           </Layout>
         </BrowserRouter>
