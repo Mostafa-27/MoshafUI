@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3301/api";
+const BASE_URL = "https://moshaf-woad.vercel.app/api";
 
 export const quranApi = {
   getPage: async (pageNumber: number) => {
