@@ -52,7 +52,7 @@ export default function SmartPagination({
   const rightPage = currentPage + 1;
 
   return (
-    <Box className="flex flex-row-reverse items-center justify-center gap-3 mt-6 mb-4">
+    <Box className="flex flex-row-reverse items-center justify-center gap-3 mt-2 mb-4">
       <IconButton
         onClick={() => onPageChange(1)}
         disabled={currentPage <= 1}

@@ -16,7 +16,7 @@ export default function Layout({
   onPageChange,
 }: LayoutProps) {
   return (
-    <Box className="min-h-screen bg-gray-50">
+    <Box className="max-h-screen  ">
       {currentPage && totalPages && onPageChange && (
         <NavigationDrawer
           currentPage={currentPage}

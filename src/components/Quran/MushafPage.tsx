@@ -25,29 +25,25 @@ export default function MushafPage({
   isRightPage = false,
 }: MushafPageProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
+    <>
       <Box
-        className={`bg-white rounded-lg shadow-md p-6 h-[842px] relative
+        className={`bg-white rounded-lg shadow-md p-2 sm:p-3 md:py-3 md:px-4 min-h-[93vh] max-h-[90vh] relative
           ${isRightPage ? "border-l" : "border-r"} border-gray-200`}
       >
-        <Box className="arabic-text text-right leading-loose text-2xl">
+        <Box className="arabic-text text-right leading-loose text-base sm:text-xl md:text-2xl overflow-y-auto h-full">
           {pageData.verses.map((verse) => (
             <span key={verse.index}>
               {verse.text}
-              <span className="inline-block mx-2 text-base text-gray-500">
+              <span className="inline-block mx-1 sm:mx-2 text-sm sm:text-base text-gray-500">
                 ﴿{verse.aya}﴾
               </span>
             </span>
           ))}
         </Box>
-        <Typography className="absolute bottom-4 left-1/2 -translate-x-1/2 text-gray-500">
+        <Typography className="absolute bottom-[-4vh] left-1/2 -translate-x-1/2 text-gray-500 text-sm sm:text-base">
           {pageData.page}
         </Typography>
       </Box>
-    </motion.div>
+    </>
   );
 }

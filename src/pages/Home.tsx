@@ -34,8 +34,8 @@ export default function Home() {
   };
 
   const content = (
-    <Container maxWidth="xl" className="py-8">
-      <Box className="grid grid-cols-2 gap-4">
+    <Container maxWidth="xl" className="py-1 max-h-screen  ">
+      <Box className="grid grid-cols-2 gap-x-4">
         {<MushafPage pageData={pageData2} />}
 
         {currentPage1 <= 603 && currentPage2 <= 604 && (

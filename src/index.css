@@ -2,41 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  body {
-    @apply m-0 antialiased;
-  }
+html,
+body {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
-
-/* We'll use system Arabic fonts instead */
-.arabic-text {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-family: "Noto Naskh Arabic", "traditional-arabic", system-ui,
     -apple-system, sans-serif;
   font-feature-settings: "kern" 1;
-  font-size: 1.5rem;
-  line-height: 2.5;
+  font-size: 1.25rem;
+  line-height: 1.5;
 }
 
 @media (max-width: 640px) {
   .arabic-text {
     font-size: 1.25rem;
     line-height: 2.25;
-  }
-}
-
-@layer components {
-  .book-page {
-    @apply relative bg-amber-50 shadow-lg;
-    background-image: linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0.02) 0%,
-      rgba(0, 0, 0, 0) 100%
-    );
-  }
-
-  .book-page::after {
-    content: "";
-    @apply absolute inset-y-0 w-4 -right-4;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.1), transparent);
   }
 }
