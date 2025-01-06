@@ -2,26 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&display=swap");
+
 html,
 body {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
 }
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Noto Naskh Arabic", "traditional-arabic", system-ui,
+  font-family: "Scheherazade New", "Amiri", "Noto Naskh Arabic", system-ui,
     -apple-system, sans-serif;
   font-feature-settings: "kern" 1;
-  font-size: 1.25rem;
-  line-height: 1.5;
 }
 
+.arabic-text {
+  font-family: "Scheherazade New", "Amiri", "traditional-arabic", serif;
+  text-align: justify;
+  text-align-last: center;
+  word-spacing: 0.2em;
+  line-height: 2.5;
+  color: #2d2d2d;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Verse marker styling */
+.arabic-text span span {
+  font-family: "traditional-arabic", "Amiri", serif;
+  font-weight: 400;
+  vertical-align: -0.1em;
+}
+
+/* Responsive text sizes */
 @media (max-width: 640px) {
   .arabic-text {
     font-size: 1.25rem;
-    line-height: 2.25;
+    line-height: 2.75;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .arabic-text {
+    font-size: 1.5rem;
+    line-height: 2.75;
+  }
+}
+
+@media (min-width: 1025px) {
+  .arabic-text {
+    font-size: 1.75rem;
+    line-height: 2.75;
   }
 }
