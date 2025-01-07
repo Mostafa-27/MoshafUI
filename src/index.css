@@ -2,8 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&display=swap");
+@font-face {
+  font-family: "UthmanicHafs";
+  src: url("/fonts/UthmanicHafs.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "me_quran";
+  src: url("/fonts/me_quran Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
 
 html,
 body {
@@ -16,48 +27,27 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Scheherazade New", "Amiri", "Noto Naskh Arabic", system-ui,
-    -apple-system, sans-serif;
-  font-feature-settings: "kern" 1;
 }
 
 .arabic-text {
-  font-family: "Scheherazade New", "Amiri", "traditional-arabic", serif;
+  font-family: "UthmanicHafs", "me_quran", serif;
   text-align: justify;
   text-align-last: center;
-  word-spacing: 0.2em;
-  line-height: 2.5;
-  color: #2d2d2d;
+  word-spacing: 0.65em;
+  color: #000000;
   font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  direction: rtl;
+  font-weight: 600;
 }
 
 /* Verse marker styling */
-.arabic-text span span {
-  font-family: "traditional-arabic", "Amiri", serif;
-  font-weight: 400;
-  vertical-align: -0.1em;
-}
-
-/* Responsive text sizes */
-@media (max-width: 640px) {
-  .arabic-text {
-    font-size: 1.25rem;
-    line-height: 2.75;
-  }
-}
-
-@media (min-width: 641px) and (max-width: 1024px) {
-  .arabic-text {
-    font-size: 1.5rem;
-    line-height: 2.75;
-  }
-}
-
-@media (min-width: 1025px) {
-  .arabic-text {
-    font-size: 1.75rem;
-    line-height: 2.75;
-  }
+.verse-number {
+  font-family: "me_quran", serif;
+  font-weight: 600;
+  color: #000000;
+  font-size: 0.85em;
+  vertical-align: baseline;
+  margin: 0 8px;
 }

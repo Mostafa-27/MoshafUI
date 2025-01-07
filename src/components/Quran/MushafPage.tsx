@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 interface Verse {
   index: number;
@@ -29,9 +30,16 @@ export default function MushafPage({
   pageData,
   isRightPage = false,
 }: MushafPageProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const lineRefs = useRef<(HTMLDivElement | null)[]>([]);
+
   // Function to split text into words and preserve verse numbers
   const splitIntoWords = (text: string): string[] => {
-    return text.split(/\s+/).filter((word) => word.length > 0);
+    // Remove special formatting characters and extra spaces
+    const cleanText = text.replace(/[﴿﴾]/g, "").replace(/\s+/g, " ").trim();
+    return cleanText
+      .split(" ")
+      .filter((word) => word.length > 0 && !/^\d+$/.test(word));
   };
 
   // Function to format verses into lines with 9 words each
@@ -43,20 +51,22 @@ export default function MushafPage({
     // Flatten all words and track verse numbers
     const allWords = verses.reduce((acc, verse) => {
       const words = splitIntoWords(verse.text);
-      acc.push(
-        ...words.map((word, idx) => {
-          if (idx === words.length - 1) {
-            return { word, verseNumber: verse.aya };
-          }
-          return { word };
-        })
-      );
-      return acc;
+      const wordsWithVerseInfo = words.map((word, idx) => {
+        if (idx === words.length - 1) {
+          return { word, verseNumber: verse.aya };
+        }
+        return { word };
+      });
+      return [...acc, ...wordsWithVerseInfo];
     }, [] as Array<{ word: string; verseNumber?: number }>);
 
     // Group words into lines of 9
     allWords.forEach((wordObj, idx) => {
-      currentLine.push(wordObj.word);
+      // Only add actual words (not verse numbers or formatting)
+      if (wordObj.word.length > 0 && !/^\d+$/.test(wordObj.word)) {
+        currentLine.push(wordObj.word);
+      }
+
       if (wordObj.verseNumber) {
         currentVerseNumbers.push({
           number: wordObj.verseNumber,
@@ -64,6 +74,7 @@ export default function MushafPage({
         });
       }
 
+      // Create a new line when we reach 9 actual words or it's the last word
       if (currentLine.length === 9 || idx === allWords.length - 1) {
         if (currentLine.length > 0) {
           lines.push({
@@ -87,59 +98,104 @@ export default function MushafPage({
 
   const formattedLines = formatIntoLines(pageData.verses);
 
+  // Function to adjust font size for each line
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const containerWidth = containerRef.current.offsetWidth - 40; // Account for padding
+    const containerHeight = containerRef.current.offsetHeight;
+    const lineCount = lineRefs.current.length;
+    const targetLineHeight = (containerHeight / lineCount) * 0.95; // 95% of available height per line
+
+    const adjustFontSize = () => {
+      // First pass: Find a font size that fits the width
+      let maxFontSize = 52;
+      let minFontSize = 24;
+      let bestFontSize = minFontSize;
+
+      lineRefs.current.forEach((lineRef) => {
+        if (!lineRef || !lineRef.firstChild) return;
+
+        let currentFontSize = maxFontSize;
+        while (minFontSize <= maxFontSize) {
+          currentFontSize = Math.floor((minFontSize + maxFontSize) / 2);
+          lineRef.style.fontSize = `${currentFontSize}px`;
+          lineRef.style.lineHeight = "2.2";
+
+          const lineHeight = lineRef.offsetHeight;
+          const lineWidth = lineRef.scrollWidth;
+
+          if (lineWidth > containerWidth || lineHeight > targetLineHeight) {
+            maxFontSize = currentFontSize - 1;
+          } else if (
+            lineWidth < containerWidth - 18 &&
+            lineHeight < targetLineHeight
+          ) {
+            minFontSize = currentFontSize + 1;
+            bestFontSize = Math.max(bestFontSize, currentFontSize);
+          } else {
+            bestFontSize = currentFontSize;
+            break;
+          }
+        }
+      });
+
+      // Second pass: Apply the best font size to all lines
+      lineRefs.current.forEach((lineRef) => {
+        if (!lineRef) return;
+        lineRef.style.fontSize = `${bestFontSize}px`;
+        lineRef.style.lineHeight = "2.2";
+      });
+
+      console.log(`Final font size: ${bestFontSize}px`);
+    };
+
+    adjustFontSize();
+    window.addEventListener("resize", adjustFontSize);
+    return () => window.removeEventListener("resize", adjustFontSize);
+  }, [formattedLines]);
+
   return (
     <Box
-      className={`relative bg-[#FDF8EE] rounded-lg shadow-lg p-2 sm:p-3 md:py-4 md:px-6 min-h-[93vh] max-h-[90vh]
-        ${isRightPage ? "border-l" : "border-r"} border-gray-300`}
-      sx={{
-        backgroundImage: `
-          linear-gradient(to right, rgba(139, 69, 19, 0.1) 1px, transparent 1px),
-          linear-gradient(to bottom, rgba(139, 69, 19, 0.1) 1px, transparent 1px)
-        `,
-        backgroundSize: "25px 25px",
-      }}
+      className={`relative bg-white rounded-lg shadow-lg p-0.5 sm:p-1 md:py-2 md:px-3 min-h-[85vh] sm:min-h-[90vh] md:min-h-[93vh] max-h-[85vh] sm:max-h-[90vh] md:max-h-[93vh] w-full mx-auto border border-gray-300 ${
+        isRightPage ? "border-l" : "border-r"
+      }`}
     >
-      {/* Decorative Corner Borders */}
-      <Box className="absolute top-0 left-0 w-12 h-12 border-t-4 border-l-4 border-[#8B4513] rounded-tl-lg" />
-      <Box className="absolute top-0 right-0 w-12 h-12 border-t-4 border-r-4 border-[#8B4513] rounded-tr-lg" />
-      <Box className="absolute bottom-0 left-0 w-12 h-12 border-b-4 border-l-4 border-[#8B4513] rounded-bl-lg" />
-      <Box className="absolute bottom-0 right-0 w-12 h-12 border-b-4 border-r-4 border-[#8B4513] rounded-br-lg" />
-
       {/* Main Content */}
-      <Box className="relative z-10 h-full">
-        {/* Decorative Header */}
-        <Box className="text-center mb-4">
-          <div className="w-36 h-0.5 bg-[#8B4513] mx-auto mb-1 rounded-full" />
-          <div className="w-24 h-0.5 bg-[#8B4513] mx-auto rounded-full" />
-        </Box>
-
+      <Box className="relative z-10 h-full py-6">
         {/* Quran Text */}
-        <Box className="arabic-text text-right h-[calc(100%-6rem)] px-4 flex flex-col">
+        <Box
+          ref={containerRef}
+          className="arabic-text h-[calc(100%-2rem)] px-4 sm:px-6 md:px-8 flex flex-col justify-between"
+        >
           {formattedLines.map((line, index) => {
             const words = line.text.split(" ");
             return (
               <div
                 key={index}
-                className="text-center mb-0.5 leading-[1.8] text-lg sm:text-xl md:text-2xl"
+                ref={(el) => (lineRefs.current[index] = el)}
+                className="text-center leading-[1.5] whitespace-nowrap"
                 style={{
                   fontFeatureSettings: "'kern' 1, 'liga' 1, 'calt' 1",
-                  letterSpacing: "-0.5px",
+                  letterSpacing: "2px",
+                  textAlign: "justify",
+                  textAlignLast: "center",
+                  paddingInline: "10%",
                 }}
               >
                 {words.map((word, wordIndex) => (
-                  <span key={wordIndex}>
+                  <span key={wordIndex} className="mx-[0.1em]">
                     {word}
                     {line.verseNumbers.map((vn) =>
                       vn.position === wordIndex ? (
                         <span
                           key={vn.number}
-                          className="inline-block mx-0.5 text-sm sm:text-base text-[#8B4513] font-[traditional-arabic] align-baseline"
+                          className="verse-number inline-block mx-1"
                         >
                           ﴿{vn.number}﴾
                         </span>
                       ) : null
                     )}
-                    {wordIndex < words.length - 1 && " "}
                   </span>
                 ))}
               </div>
@@ -149,8 +205,7 @@ export default function MushafPage({
 
         {/* Page Number */}
         <Box className="absolute bottom-2 left-1/2 -translate-x-1/2 text-center">
-          <div className="w-16 h-0.5 bg-[#8B4513] mx-auto mb-1 rounded-full" />
-          <Typography className="text-[#8B4513] text-base font-semibold">
+          <Typography className="text-gray-600 text-sm font-semibold">
             {pageData.page}
           </Typography>
         </Box>
