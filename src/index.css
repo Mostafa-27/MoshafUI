@@ -19,39 +19,74 @@
 /* Decorative Border Pattern */
 .corner-pattern {
   position: absolute;
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   background-image: radial-gradient(
     circle at center,
-    #8b4513 2px,
-    transparent 2px
+    #8b4513 1.5px,
+    transparent 1.5px
   );
-  background-size: 8px 8px;
+  background-size: 6px 6px;
   opacity: 0.6;
 }
 
+@media (min-width: 640px) {
+  .corner-pattern {
+    width: 32px;
+    height: 32px;
+    background-image: radial-gradient(
+      circle at center,
+      #8b4513 2px,
+      transparent 2px
+    );
+    background-size: 8px 8px;
+  }
+}
+
 .corner-pattern-tl {
-  top: 8px;
-  left: 8px;
+  top: 6px;
+  left: 6px;
   transform: rotate(45deg);
 }
 
 .corner-pattern-tr {
-  top: 8px;
-  right: 8px;
+  top: 6px;
+  right: 6px;
   transform: rotate(-45deg);
 }
 
 .corner-pattern-bl {
-  bottom: 8px;
-  left: 8px;
+  bottom: 6px;
+  left: 6px;
   transform: rotate(-45deg);
 }
 
 .corner-pattern-br {
-  bottom: 8px;
-  right: 8px;
+  bottom: 6px;
+  right: 6px;
   transform: rotate(45deg);
+}
+
+@media (min-width: 640px) {
+  .corner-pattern-tl,
+  .corner-pattern-tr {
+    top: 8px;
+  }
+
+  .corner-pattern-bl,
+  .corner-pattern-br {
+    bottom: 8px;
+  }
+
+  .corner-pattern-tl,
+  .corner-pattern-bl {
+    left: 8px;
+  }
+
+  .corner-pattern-tr,
+  .corner-pattern-br {
+    right: 8px;
+  }
 }
 
 html,
