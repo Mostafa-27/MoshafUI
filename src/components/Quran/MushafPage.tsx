@@ -157,12 +157,24 @@ export default function MushafPage({
 
   return (
     <Box
-      className={`relative bg-white rounded-lg shadow-lg p-0.5 sm:p-1 md:py-2 md:px-3 min-h-[85vh] sm:min-h-[90vh] md:min-h-[93vh] max-h-[85vh] sm:max-h-[90vh] md:max-h-[93vh] w-fit  mx-auto border border-gray-300 ${
+      className={`relative bg-white rounded-lg shadow-lg p-0.5 sm:p-1 md:py-2 md:px-3 min-h-[85vh] sm:min-h-[90vh] md:min-h-[93vh] max-h-[85vh] sm:max-h-[90vh] md:max-h-[93vh] w-fit mx-auto border-8 border-double border-[#8B4513] ${
         isRightPage ? "border-l" : "border-r"
       }`}
     >
-      {/* Main Content */}
-      <Box className="relative z-10 h-full py-6">
+      {/* Decorative Corner Elements */}
+      <div className="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-[#8B4513] rounded-tl-lg" />
+      <div className="absolute top-0 right-0 w-16 h-16 border-t-4 border-r-4 border-[#8B4513] rounded-tr-lg" />
+      <div className="absolute bottom-0 left-0 w-16 h-16 border-b-4 border-l-4 border-[#8B4513] rounded-bl-lg" />
+      <div className="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-[#8B4513] rounded-br-lg" />
+
+      {/* Decorative Corner Patterns */}
+      <div className="corner-pattern corner-pattern-tl" />
+      <div className="corner-pattern corner-pattern-tr" />
+      <div className="corner-pattern corner-pattern-bl" />
+      <div className="corner-pattern corner-pattern-br" />
+
+      {/* Inner Border */}
+      <Box className="relative z-10 h-full py-6 border-4 border-[#8B4513] mx-4 my-4 rounded-lg">
         {/* Quran Text */}
         <Box
           ref={containerRef}
