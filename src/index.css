@@ -31,8 +31,8 @@ body {
 
 .arabic-text {
   font-family: "UthmanicHafs", "me_quran", serif;
-  text-align: justify;
-  text-align-last: center;
+  text-align: left;
+  text-align-last: left;
   word-spacing: 1.2em;
   letter-spacing: 0;
   color: #000000;

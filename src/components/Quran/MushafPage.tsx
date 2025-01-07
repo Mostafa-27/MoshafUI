@@ -157,7 +157,7 @@ export default function MushafPage({
 
   return (
     <Box
-      className={`relative bg-white rounded-lg shadow-lg p-0.5 sm:p-1 md:py-2 md:px-3 min-h-[85vh] sm:min-h-[90vh] md:min-h-[93vh] max-h-[85vh] sm:max-h-[90vh] md:max-h-[93vh] w-full mx-auto border border-gray-300 ${
+      className={`relative bg-white rounded-lg shadow-lg p-0.5 sm:p-1 md:py-2 md:px-3 min-h-[85vh] sm:min-h-[90vh] md:min-h-[93vh] max-h-[85vh] sm:max-h-[90vh] md:max-h-[93vh] w-fit  mx-auto border border-gray-300 ${
         isRightPage ? "border-l" : "border-r"
       }`}
     >
@@ -166,7 +166,7 @@ export default function MushafPage({
         {/* Quran Text */}
         <Box
           ref={containerRef}
-          className="arabic-text h-[calc(100%-2rem)] px-4 sm:px-6 md:px-8 flex flex-col justify-between"
+          className="arabic-text h-[calc(100%-2rem)] px-2 sm:px-3 md:px-4 flex flex-col justify-center items-center mx-auto"
         >
           {formattedLines.map((line, index) => {
             const words = line.text.split(" ");
