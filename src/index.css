@@ -33,13 +33,16 @@ body {
   font-family: "UthmanicHafs", "me_quran", serif;
   text-align: justify;
   text-align-last: center;
-  word-spacing: 0.65em;
+  word-spacing: 1.2em;
+  letter-spacing: 0;
   color: #000000;
   font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   direction: rtl;
   font-weight: 600;
+  line-height: 2.8;
+  padding: 0 2rem;
 }
 
 /* Verse marker styling */

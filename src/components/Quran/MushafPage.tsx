@@ -177,20 +177,22 @@ export default function MushafPage({
                 className="text-center leading-[1.5] whitespace-nowrap"
                 style={{
                   fontFeatureSettings: "'kern' 1, 'liga' 1, 'calt' 1",
-                  letterSpacing: "2px",
+                  letterSpacing: "0",
                   textAlign: "justify",
                   textAlignLast: "center",
-                  paddingInline: "10%",
+                  paddingInline: "12%",
+                  wordSpacing: "1.2em",
+                  lineHeight: "2.8",
                 }}
               >
                 {words.map((word, wordIndex) => (
-                  <span key={wordIndex} className="mx-[0.1em]">
+                  <span key={wordIndex} className="inline-block mx-[0.2em]">
                     {word}
                     {line.verseNumbers.map((vn) =>
                       vn.position === wordIndex ? (
                         <span
                           key={vn.number}
-                          className="verse-number inline-block mx-1"
+                          className="verse-number inline-block mx-2"
                         >
                           ﴿{vn.number}﴾
                         </span>
